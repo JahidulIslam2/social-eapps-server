@@ -33,8 +33,8 @@ const run = async () => {
 
         app.get('/user', async (req, res) => {
             const email = req.query.email;
-            const query = { email: email }
-            const user = await UserInfoCollection.find(query).toArray();
+            const filter = { email: email }
+            const user = await UserInfoCollection.findOne(filter);
             res.send(user)
         })
 
@@ -42,6 +42,13 @@ const run = async () => {
         app.post('/postData', async (req, res) => {
             const postData = req.body;
             const result = await postCollection.insertOne(postData);
+            res.send(result);
+        })
+
+
+        app.get('/postData', async (req, res) => {
+            const query = {}
+            const result = await postCollection.find(query).toArray();
             res.send(result);
         })
 
